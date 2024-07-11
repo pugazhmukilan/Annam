@@ -14,21 +14,21 @@ class HistoryBlocBloc extends Bloc<HistoryBlocEvent, HistoryBlocState> {
     on<GetLogData>((event, emit) async {
       try {
         emit(dataLoading());
-        String dateSelected = "${event.selectedYear}-${event.selectedmonth.toString().substring(5, 7)}-01";
+        String dateSelected =
+            "${event.selectedYear}-${event.selectedmonth.toString().substring(5, 7)}-01";
         DateTime history = DateTime(event.selectedYear,
             int.parse(event.selectedmonth.toString().substring(5, 7)), 26);
         print(int.parse(event.selectedmonth.toString().substring(5, 7)));
 
-        final url = Uri.parse(
-            '${Baseurl}/api/User/UserLunchHistory');
+        final url = Uri.parse('$Baseurl/api/User/UserLunchHistory');
         final headers = {
           'Content-Type': 'application/json',
           'Authorization':
-              'Basic ${base64Encode(utf8.encode('${Authusername}:${Authpassword}'))}'
+              'Basic ${base64Encode(utf8.encode('$Authusername:$Authpassword'))}'
         };
         print(history);
         final body = jsonEncode({
-          'id':Id.toString(),
+          'id': Id.toString(),
           'datetime': history.toIso8601String(),
         });
 

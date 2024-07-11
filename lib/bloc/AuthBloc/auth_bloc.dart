@@ -27,33 +27,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         //LOGIN API call
         try {
           final url = Uri.parse(
-              '${Baseurl}/api/User/Login?username=${event.userName}&password=${event.password}');
+              '$Baseurl/api/User/Login?username=${event.userName}&password=${event.password}');
           final headers = {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ${base64Encode(utf8.encode('$Authusername:$Authpassword'))}'
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('$Authusername:$Authpassword'))}'
           };
 
           final response = await http.post(url, headers: headers);
 
-        if (response.statusCode == 200) {
-          //print(response.statusCode);
-          Map<String, dynamic> fulldata = jsonDecode(response.body);
-          Map<String, dynamic> data = fulldata['data'];
-          emit((GettingUserInfo()));
-          Add_data(data);
-          //gets the no of orders from the API call method
-          Orders_completed = await Get_orders_completed(Id);
-          await Get_Pre_Orders(Id);
-          emit(AuthSuccessfull(successMessage: "You have Logged in Successfully!!"));
-        } else {
-          //print('Login failed: ${response.reasonPhrase}');
-          emit(AuthFailed(errorMessage: "${response.reasonPhrase}"));
-        }
-
-
-        }catch(e){
+          if (response.statusCode == 200) {
+            //print(response.statusCode);
+            Map<String, dynamic> fulldata = jsonDecode(response.body);
+            Map<String, dynamic> data = fulldata['data'];
+            emit((GettingUserInfo()));
+            Add_data(data);
+            //gets the no of orders from the API call method
+            Orders_completed = await Get_orders_completed(Id);
+            await Get_Pre_Orders(Id);
+            emit(AuthSuccessfull(
+                successMessage: "You have Logged in Successfully!!"));
+          } else {
+            //print('Login failed: ${response.reasonPhrase}');
+            emit(AuthFailed(errorMessage: "${response.reasonPhrase}"));
+          }
+        } catch (e) {
           //print("error in api");
-          emit(AuthFailed(errorMessage: "${e.toString()}"));
+          emit(AuthFailed(errorMessage: e.toString()));
         }
       }
     });
