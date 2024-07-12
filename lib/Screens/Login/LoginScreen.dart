@@ -9,6 +9,7 @@ import 'package:food_preorder_app/Screens/Home/HomePage.dart';
 import 'package:food_preorder_app/Widgets/Popups/DialogeBox.dart';
 import 'package:food_preorder_app/Widgets/Popups/showErrorDialog.dart';
 import 'package:food_preorder_app/bloc/AuthBloc/auth_bloc.dart';
+import 'package:food_preorder_app/utils/add_username_password.dart';
 
 import '../../Widgets/Button.dart';
 bool _isDialogShown = false;
@@ -56,6 +57,10 @@ class _LoginscreenState extends State<Loginscreen> {
           }
           if (state is AuthSuccessfull) {
             // Close the loading dialog
+            addUsername(Usernametexteditor.text.trim());
+            addpassword(PasswordTextController.text.trim());
+            addloggedin();
+            print("added to the shared preference");
             Navigator.pop(context);
             FocusScope.of(context).unfocus(); // Dismiss keyboard if open
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -73,7 +78,9 @@ class _LoginscreenState extends State<Loginscreen> {
             }
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             _isDialogShown = false;
+            
             return showErrorDialog(context, state.errorMessage, "Login Error");
+            
             //Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Error", content: "Can't able to Login check your email and password")));
 
             // showDialog(

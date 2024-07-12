@@ -13,6 +13,7 @@ import 'package:food_preorder_app/Widgets/Popups/SnackBarWidget.dart';
 import 'package:food_preorder_app/Widgets/UserlogButton.dart';
 import 'package:food_preorder_app/Widgets/bottomwidget.dart';
 import 'package:food_preorder_app/bloc/CalendarBloc/bloc/calendar_bloc.dart';
+import 'package:food_preorder_app/utils/add_username_password.dart';
 
 int no_of_orders = 0;
 
@@ -59,6 +60,8 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   Clear_data();
+                  cleardatafrompref();
+                  addLoggedout();
                   // SnackbarHelper.showSnackbar(context,
                   // title: "Not implemented!!",
                   // message: "Logout function not yet implemented yet ",
